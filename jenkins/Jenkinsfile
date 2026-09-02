@@ -1,10 +1,14 @@
 pipeline {
     agent any
     
+    // 1. ADD THIS TOOLS BLOCK
+    tools {
+        jdk 'jdk21'      // Must match your exact name in Manage Jenkins -> Tools
+        maven 'maven3'   // Must match your exact name in Manage Jenkins -> Tools
+    }
+    
     environment {
-        JAVA_HOME = '/usr/lib/jvm/java-21-amazon-corretto'
-        PATH = "/opt/maven/bin:$JAVA_HOME/bin:$PATH"
-        
+        // 2. REMOVE JAVA_HOME and PATH from here
         // Nexus Configuration - Update with your EC2 IP
         NEXUS_URL = "http://52.90.103.249:8081"
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
