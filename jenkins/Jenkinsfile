@@ -24,13 +24,7 @@ pipeline {
     }
     
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'master',
-                    url: 'https://github.com/skillupwithsachin/simple-java-maven-app.git'
-            }
-        }
-        
+       
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
@@ -48,19 +42,22 @@ pipeline {
             }
         }
 
-       stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             steps {
+                // Ensure 'sonarqube-token' contains your SonarCloud User Token
                 withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
                     sh '''
                         mvn sonar:sonar \
-                        -Dsonar.projectKey=simple-java-maven-app \
-                        -Dsonar.projectName='Simple Java Maven App' \
                         -Dsonar.host.url=${SONARQUBE_URL} \
-                        -Dsonar.token=${SONAR_TOKEN}
+                        -Dsonar.token=${SONAR_TOKEN} \
+                        -Dsonar.organization=${SONAR_ORGANIZATION} \
+                        -Dsonar.projectKey=maykov15_simple-java-maven-app \
+                        -Dsonar.projectName='Simple Java Maven App'
                     '''
                 }
             }
         }
+
         
    stage('Upload to Nexus') {
             steps {
