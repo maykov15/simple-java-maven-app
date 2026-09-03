@@ -8,11 +8,15 @@ pipeline {
     }
     
     environment {
-        // 2. REMOVE JAVA_HOME and PATH from here
-        // Nexus Configuration - Update with your EC2 IP
+        // 1. Point to SonarCloud's official cloud URL
+        SONARQUBE_URL = "https://sonarcloud.io"
+        
+        // 2. Add your unique SonarCloud Organization Key
+        SONAR_ORGANIZATION = "maykov15"
+        
+        // Keep your other configs
         NEXUS_URL = "http://52.90.103.249:8081"
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
-        SONARQUBE_URL = "http://52.90.103.249:9000"
     }
     
     options {
